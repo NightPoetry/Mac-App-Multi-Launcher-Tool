@@ -13,7 +13,7 @@ MacAppMultiLauncher/
 ├── README.md                    # 项目主文档
 ├── README_EN.md                 # 英文版项目文档
 ├── LICENSE                      # GPL-3.0 开源协议
-├── scripts/scripts/scripts/scripts/scripts/scripts/.sh                 # 命令行多开脚本
+├── scripts/.sh                 # 命令行多开脚本
 ├── scripts/fix-icon-slash.sh            # 命令行修复脚本
 ├── scripts/test-icns-version.sh         # ICNS 版本测试脚本
 ├── assets/图标.png                     # 项目图标

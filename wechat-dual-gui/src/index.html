@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>微信分身工具</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="cropper.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>微信分身工具</h1>
+            <p class="subtitle">可视化创建和管理微信多开应用</p>
+        </header>
+
+        <main>
+            <div class="left-panel">
+                <section class="status-section">
+                    <h2>状态</h2>
+                    <div id="wechat-status" class="status-card">
+                        <div class="status-icon">⏳</div>
+                        <div class="status-text">
+                            <h3>检查微信安装状态</h3>
+                            <p id="wechat-status-text">正在检查...</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="create-section">
+                    <h2>创建分身微信</h2>
+                    <form id="create-form">
+                        <div class="form-group">
+                            <label for="app-name">应用名称</label>
+                            <input type="text" id="app-name" value="微信分身" placeholder="例如：微信分身、WeChat2">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="bundle-id">Bundle ID</label>
+                            <input type="text" id="bundle-id" value="com.tencent.xinWeChat2" placeholder="例如：com.tencent.xinWeChat2">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="custom-icon">自定义图标（可选）</label>
+                            <div class="icon-selector">
+                                <input type="file" id="custom-icon" accept=".icns,.png,.jpg,.jpeg" style="display: none;">
+                                <button type="button" id="select-icon-btn" class="btn-secondary">
+                                    选择文件
+                                </button>
+                                <span id="selected-icon-name" class="icon-name">未选择</span>
+                            </div>
+                        </div>
+
+                        <button type="submit" id="create-btn" class="btn-primary">
+                            创建分身微信
+                        </button>
+                    </form>
+                </section>
+            </div>
+
+            <div class="right-panel">
+                <section class="list-section">
+                    <h2>分身应用</h2>
+                    <div id="dual-apps-list" class="apps-list">
+                        <p class="empty-state">正在加载...</p>
+                    </div>
+                </section>
+
+                <section class="log-section">
+                    <h2>操作日志</h2>
+                    <div id="log-output" class="log-output">
+                        <p class="log-info">欢迎使用微信分身工具！</p>
+                    </div>
+                    <button id="clear-log-btn" class="btn-secondary btn-small">
+                        清空日志
+                    </button>
+                </section>
+            </div>
+        </main>
+
+        <div id="edit-modal" class="modal">
+            <div class="modal-overlay"></div>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>编辑应用</h2>
+                    <button class="modal-close" id="modal-close-btn">×</button>
+                </div>
+                <div class="modal-body">
+                    <form id="edit-form">
+                        <input type="hidden" id="edit-app-name">
+                        <div class="form-group">
+                            <label for="edit-new-name">新应用名称</label>
+                            <input type="text" id="edit-new-name" placeholder="输入新的应用名称">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="edit-new-icon">新图标（可选）</label>
+                            <div class="icon-selector">
+                                <input type="file" id="edit-new-icon" accept=".icns,.png,.jpg,.jpeg" style="display: none;">
+                                <button type="button" id="edit-select-icon-btn" class="btn-secondary">
+                                    选择文件
+                                </button>
+                                <span id="edit-selected-icon-name" class="icon-name">未选择</span>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" id="cancel-edit-btn" class="btn-secondary">取消</button>
+                            <button type="submit" class="btn-primary">保存修改</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div id="crop-modal" class="modal">
+            <div class="modal-overlay"></div>
+            <div class="modal-content crop-modal-content">
+                <div class="modal-header">
+                    <h2>裁剪图标</h2>
+                    <button class="modal-close" id="crop-modal-close-btn">×</button>
+                </div>
+                <div class="modal-body crop-modal-body">
+                    <div class="crop-container">
+                        <img id="crop-image" src="" alt="待裁剪图片">
+                    </div>
+                    <div class="crop-preview">
+                        <div class="preview-label">预览（1024x1024）</div>
+                        <div class="preview-box">
+                            <div class="preview-image"></div>
+                        </div>
+                    </div>
+                    <div class="crop-actions">
+                        <button type="button" id="crop-rotate-btn" class="btn-secondary">
+                            旋转 90°
+                        </button>
+                        <button type="button" id="crop-reset-btn" class="btn-secondary">
+                            重置
+                        </button>
+                        <button type="button" id="crop-confirm-btn" class="btn-primary">
+                            完成裁剪
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="cropper.js"></script>
+    <script type="module" src="main.js"></script>
+</body>
+</html>

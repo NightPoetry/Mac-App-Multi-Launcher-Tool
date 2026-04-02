@@ -1,0 +1,15 @@
+{
+  "name": "wechat-fenshen-gui",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "tauri": "tauri"
+  },
+  "dependencies": {
+    "cropperjs": "^1.6.2"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2"
+  }
+}

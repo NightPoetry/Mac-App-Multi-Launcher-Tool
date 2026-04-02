@@ -205,7 +205,7 @@ For detailed license terms, please check the [LICENSE](LICENSE) file.
 
 ---
 
-## 🌟 Contribution Guidelines
+## Contribute Guidelines
 
 Contributions are welcome:
 
@@ -214,7 +214,18 @@ Contributions are welcome:
 - 💡 Share usage tips
 - 🔧 Provide improvement suggestions
 
-Please ensure your contribution content is legal and compliant and does not involve commercial use.
+### Contribution Content Guidelines
+
+**Software Itself**:
+- ✅ This project software itself does not involve commercial use
+- ✅ Intended for learning, research, and technical exploration only
+- ✅ Commercial use of the software itself is prohibited
+
+**Human Services**:
+- ✅ Education, training, and consulting services are allowed
+- ✅ Download assistance, installation support, and other technical support services are allowed
+- ✅ Custom development services based on this project are allowed
+- ✅ Human services themselves are not within the scope of software commercial use restrictions
 
 ---
 

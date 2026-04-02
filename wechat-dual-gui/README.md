@@ -1,6 +1,6 @@
-# 微信双开工具 GUI 版本
+# Mac应用多开工具 GUI 版本
 
-> 基于 Tauri (Rust + Web) 开发的可视化微信双开工具
+> 基于 Tauri (Rust + Web) 开发的可视化应用多开工具
 
 ---
 
@@ -9,7 +9,7 @@
 ### 开发模式运行
 
 ```bash
-cd wechat-dual-gui
+cd app-multi-launcher-gui
 npm install
 npm run tauri dev
 ```
@@ -26,8 +26,8 @@ npm run tauri build
 
 ## ✨ 功能特性
 
-### 1. 一键双开
-- ✅ 自动复制微信应用
+### 1. 一键多开
+- ✅ 自动复制应用
 - ✅ 自动修改 Bundle ID
 - ✅ 自动清除隔离属性（避免斜杠）
 - ✅ 自动修复文件权限
@@ -35,10 +35,10 @@ npm run tauri build
 - ✅ 可选自定义图标
 
 ### 2. 应用管理
-- 📋 查看所有双开应用
-- 🚀 一键启动双开应用
+- 📋 查看所有多开应用
+- 🚀 一键启动多开应用
 - 🔧 一键修复图标斜杠
-- 🗑️ 一键删除双开应用
+- 🗑️ 一键删除多开应用
 
 ### 3. 图标自定义
 - 📁 支持选择自定义图标
@@ -55,16 +55,16 @@ npm run tauri build
 ## 🎨 界面预览
 
 ### 主界面
-- **状态检查**：显示微信安装状态
+- **状态检查**：显示应用安装状态
 - **创建表单**：输入应用名称、Bundle ID、选择图标
-- **应用列表**：显示所有双开应用
+- **应用列表**：显示所有多开应用
 - **操作日志**：实时显示操作进度
 
 ### 操作按钮
-- **创建双开微信**：一键创建
-- **启动**：启动双开应用
+- **创建多开应用**：一键创建
+- **启动**：启动多开应用
 - **修复**：修复图标斜杠
-- **删除**：删除双开应用
+- **删除**：删除多开应用
 
 ---
 
@@ -89,67 +89,67 @@ npm run tauri build
 
 ## 📋 Rust 后端 API
 
-### check_wechat_installed
-检查微信是否已安装
+### check_app_installed
+检查应用是否已安装
 
 ```rust
-fn check_wechat_installed() -> Result<bool, String>
+fn check_app_installed() -> Result<bool, String>
 ```
 
-### create_dual_wechat
-创建双开微信
+### create_dual_app
+创建多开应用
 
 ```rust
-fn create_dual_wechat(
+fn create_dual_app(
     app_name: String,
     bundle_id: String,
     custom_icon: Option<String>,
 ) -> Result<String, String>
 ```
 
-### launch_dual_wechat
-启动双开微信
+### launch_dual_app
+启动多开应用
 
 ```rust
-fn launch_dual_wechat(app_name: String) -> Result<String, String>
+fn launch_dual_app(app_name: String) -> Result<String, String>
 ```
 
-### fix_icon_slash
+###### fix_icon_slash
 修复图标斜杠
 
 ```rust
 fn fix_icon_slash(app_name: String) -> Result<String, String>
 ```
 
-### get_dual_wechat_list
-获取双开应用列表
+### get_dual_app_list
+获取多开应用列表
 
 ```rust
-fn get_dual_wechat_list() -> Result<Vec<String>, String>
+fn get_dual_app_list()() -> Result<Vec<String>, String>
 ```
 
-### delete_dual_wechat
-删除双开应用
+### delete_dual_app
+删除多开应用
 
 ```rust
-fn delete_dual_wechat(app_name: String) -> Result<String, String>
+fn delete_dual_app(app_name: String) -> Result<String, String>
 ```
 
 ---
 
 ## 🎨 使用流程
 
-### 1. 创建双开微信
+### 1. 创建多开应用
 
-1. 输入应用名称（如：微信双开）
-2. 输入 Bundle ID（如：com.tencent.xinWeChat2）
+1. 输入应用名称（如：应用分身）
+2. 输入 Bundle ID（如：com.example.app2）
 3. 可选：点击"选择图标文件"按钮
-4. 点击"创建双开微信"按钮
+4. 点击"创建多开应用"按钮
 5. 等待创建完成
 
-### 2. 管理双开应用
+### 2. 管理多开应用
 
-1. 在"已有双开应用"列表中查看
+1. 在"已有多开应用"列表中查看
 2. 点击"启动"按钮启动应用
 3. 点击"修复"按钮修复图标斜杠
 4. 点击"删除"按钮删除应用
@@ -167,7 +167,7 @@ fn delete_dual_wechat(app_name: String) -> Result<String, String>
 ### 权限要求
 - 需要管理员权限执行系统命令
 - 需要文件读写权限
--需要执行 shell 命令权限
+- 需要执行 shell 命令权限
 
 ### 安全机制
 - 仅修改本地应用文件
@@ -204,7 +204,7 @@ npm run tauri check
 ### 项目结构
 
 ```
-wechat-dual-gui/
+app-multi-launcher-gui/
 ├── src/                    # 前端代码
 │   ├── index.html          # HTML 结构
 │   ├── main.js            # JavaScript 逻辑
@@ -222,9 +222,9 @@ wechat-dual-gui/
 
 ## 🐛 常见问题
 
-### Q: 提示"微信未安装"？
+### Q: 提示"应用未安装"？
 
-**A**: 请先从 App Store 或官网安装微信。
+**A**: 请先从 App Store 或官网安装应用。
 
 ### Q: 创建失败？
 
@@ -265,7 +265,7 @@ wechat-dual-gui/
 ## 🌟 项目特色
 
 - ✅ **可视化操作**：无需命令行
-- ✅ **一键双开**：自动化完成所有步骤
+- ✅ **一键多开**：自动化完成所有步骤
 - ✅ **自动修复**：自动清除斜杠
 - ✅ **图标自定义**：可视化选择图标
 - ✅ **实时日志**：查看操作进度
@@ -276,9 +276,9 @@ wechat-dual-gui/
 
 **项目状态**: ✅ 开发完成  
 **版本**: 1.0.0  
-**最后更新**: 2026-03-31  
+**最后更新**: 2026-04-02  
 **维护状态**: 🟢 活跃维护中
 
 ---
 
-*感谢使用微信双开工具 GUI 版本！*
+*感谢使用Mac应用多开工具 GUI 版本！*

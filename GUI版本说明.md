@@ -11,23 +11,30 @@
 ```
 MacAppMultiLauncher/
 ├── README.md                    # 项目主文档
+├── README_EN.md                 # 英文版项目文档
 ├── LICENSE                      # GPL-3.0 开源协议
 ├── app-dual.sh                 # 命令行多开脚本
 ├── fix-icon-slash.sh            # 命令行修复脚本
+├── test-icns-version.sh         # ICNS 版本测试脚本
+├── 图标.png                     # 项目图标
 ├── 项目总结.md                  # 项目完成总结
-├── GUI版本说明.md              # GUI 版本司明（本文档）
-├── app-multi-launcher-gui/      # GUI 应用目录
-│   ├── README.md              # GUI 应用文档
-│   ├── src/                   # 前端代码
-│   │   ├── index.html        # HTML 结构
-│   │   ├── main.js          # JavaScript 逻辑
-│   │   └── styles.css       # CSS 样式
-│   └── src-tauri/            # 后端代码
-│       ├── src/
-│       │   ├── main.rs       # Rust 入口
-│       │   └── lib.rs       # Rust 核心逻辑
-│       ├── Cargo.toml         # Rust 依赖
-│       └── tauri.conf.json    # Tauri 配置
+├── GUI版本说明.md              # GUI 版本说明（本文档）
+├── wechat-dual-gui/             # GUI 应用目录
+│   ├── README.md                # GUI 应用文档
+│   ├── QUICK_START.md           # GUI 快速开始指南
+│   ├── package.json             # Node.js 配置
+│   ├── src/                    # 前端代码
+│   │   ├── index.html          # HTML 结构
+│   │   ├── main.js            # JavaScript 逻辑
+│   │   ├── styles.css         # CSS 样式
+│   │   └── assets/            # 静态资源
+│   └── src-tauri/             # 后端代码
+│       ├── Cargo.toml                     # Rust 依赖配置
+│       ├── tauri.conf.json      # Tauri 配置
+│       ├── build.rs             # 构建脚本
+│       └── src/                # Rust 源代码
+│           ├── main.rs           # Rust 入口
+│           └── lib.rs           # Rust 核心逻辑
 └── docs/                       # 技术文档目录
     ├── 快速开始.md
     ├── 技术原理说明.md
@@ -42,7 +49,7 @@ MacAppMultiLauncher/
 ### 开发模式运行
 
 ```bash
-cd app-multi-launcher-gui
+cd wechat-dual-gui
 npm install
 npm run tauri dev
 ```
@@ -53,7 +60,7 @@ npm run tauri dev
 npm run tauri build
 ```
 
-打包后的应用位于：`app-multi-launcher-gui/src-tauri/target/release/bundle/macos/`
+打包后的应用位于：`wechat-dual-gui/src-tauri/target/release/bundle/macos/`
 
 ---
 
@@ -69,7 +76,7 @@ npm run tauri build
 
 ### 2. 应用管理
 - 📋 查看所有多开应用
-- 🚀 一键启动多开应用
+- 🚀 一键启动多开应用应用
 - 🔧 一键修复图标斜杠
 - 🗑️ 一键删除多开应用
 
@@ -105,12 +112,12 @@ npm run tauri build
 
 ### 后端 (Rust)
 - **Tauri Commands**：提供 API 接口
-- **系统调用**：执行`shell` 命令
+- **系统调用**：执行 shell 命令
 - **文件操作**：复制、修改、删除文件
 
 ### 前端 (Vanilla JS)
 - **HTML**：界面结构
-- **CSS****：样式设计
+- **CSS**：样式设计
 - **JavaScript**：交互逻辑
 
 ### 通信机制
@@ -158,37 +165,6 @@ npm run tauri build
 
 ---
 
-## 🌟 GUI 版本特色
-
-### 相比命令行版本的优势
-
-1. **可视化可操作**
-   - ✅ 无需记忆命令
-   - ✅ 图形界面友好
-   - ✅ 适合所有用户
-
-2. **一键可操作**
-   - ✅ 自动完成所有步骤
-   - ✅ 无需手动输入命令
-   - ✅ 减少可操作错误
-
-3. **实时反馈**
-   - ✅ 可操作进度可视化
-   - ✅ 错误提示清晰
-   - ✅ 日志实时显示
-
-4. **应用管理**
-   - ✅ 统一管理所有多开应用
-   - ✅ 一键启动/修复/删除
-   - ✅ 状态一目了然
-
-5. **图标选择**
-   - ✅ 可视化选择图标
-   - ✅ 支持多种格式
-   - ✅ 预览图标文件名
-
----
-
 ## 🔒 安全说明
 
 ### 权限要求
@@ -206,7 +182,7 @@ npm run tauri build
 
 ## 📦 开发说明
 
-### 环境要求
+### 环境境要求
 - **Rust**：1.70+
 - **Node.js**：18+
 - **npm**：9+
@@ -226,6 +202,24 @@ npm run tauri build
 
 # 检查代码
 npm run tauri check
+```
+
+### 项目结构
+
+```
+wechat-dual-gui/
+├── src/                    # 前端代码
+│   ├── index.html          # HTML 结构
+│   ├── main.js            # JavaScript 逻辑
+│   ├── styles.css         # CSS 样式
+│   └── assets/            # 静态资源
+├── src-tauri/             # 后端代码
+│   ├── src/
+│   │   ├── main.rs        # Rust 入口
+│   │   └── lib.rs        # Rust 核心逻辑
+│   ├── Cargo.toml          # Rust 依赖配置
+│   └── tauri.conf.json    # Tauri 配置
+└── package.json            # Node.js 配置
 ```
 
 ---
@@ -261,11 +255,11 @@ npm run tauri check
 | 多开功能 | ✅ | ✅ |
 | 图标自定义 | ✅ | ✅ |
 | 斜杠修复 | ✅ | ✅ |
-| 可视化可操作 | ❌ | ✅ |
+| 可视化操作 | ❌ | ✅ |
 | 实时日志 | ✅ | ✅ |
 | 应用管理 | ❌ | ✅ |
 | 图标选择 | ❌ | ✅ |
-| 一键可操作 | ✅ | ✅ |
+| 一键操作 | ✅ | ✅ |
 | 适合人群 | 技术人员 | 所有用户 |
 
 ---
@@ -274,7 +268,7 @@ npm run tauri check
 
 ### 问题反馈
 - 提交 GitHub Issue
-- 查看可操作日志
+- 查看操作日志
 - 检查系统权限
 
 ### 技术支持
@@ -294,11 +288,11 @@ npm run tauri check
 
 ## 🌟 项目特色
 
-- ✅ **可视化可操作**：无需命令行
+- ✅ **可视化操作**：无需命令行
 - ✅ **一键多开**：自动化完成所有步骤
 - ✅ **自动修复**：自动清除斜杠
 - ✅ **图标自定义**：可视化选择图标
-- ✅ **实时日志**：查看可操作进度
+- ✅ **实时日志**：查看操作进度
 - ✅ **应用管理**：启动、修复、删除
 - ✅ **跨平台**：基于 Tauri，支持多平台
 - ✅ **用户友好**：适合所有用户
@@ -314,7 +308,7 @@ npm run tauri check
 
 ### GUI 版本
 - 适合所有用户
-- 可视化可操作
+- 可视化操作
 - 一键完成
 
 ### 推荐使用

@@ -134,7 +134,7 @@ The documentation includes:
 
 - Personally owned macOS device
 - Sufficient storage space
-- Developer tools installed (if needed)
+- Xcode Command Line Tools installed (if needed)
 
 ### Important Notes
 

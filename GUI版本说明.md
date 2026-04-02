@@ -13,13 +13,13 @@ MacAppMultiLauncher/
 ├── README.md                    # 项目主文档
 ├── README_EN.md                 # 英文版项目文档
 ├── LICENSE                      # GPL-3.0 开源协议
-├── app-dual.sh                 # 命令行多开脚本
-├── fix-icon-slash.sh            # 命令行修复脚本
-├── test-icns-version.sh         # ICNS 版本测试脚本
-├── 图标.png                     # 项目图标
+├── scripts/scripts/scripts/scripts/scripts/scripts/.sh                 # 命令行多开脚本
+├── scripts/fix-icon-slash.sh            # 命令行修复脚本
+├── scripts/test-icns-version.sh         # ICNS 版本测试脚本
+├── assets/图标.png                     # 项目图标
 ├── 项目总结.md                  # 项目完成总结
 ├── GUI版本说明.md              # GUI 版本说明（本文档）
-├── wechat-dual-gui/             # GUI 应用目录
+├── gui/             # GUI 应用目录
 │   ├── README.md                # GUI 应用文档
 │   ├── QUICK_START.md           # GUI 快速开始指南
 │   ├── package.json             # Node.js 配置
@@ -49,7 +49,7 @@ MacAppMultiLauncher/
 ### 开发模式运行
 
 ```bash
-cd wechat-dual-gui
+cd gui
 npm install
 npm run tauri dev
 ```
@@ -60,7 +60,7 @@ npm run tauri dev
 npm run tauri build
 ```
 
-打包后的应用位于：`wechat-dual-gui/src-tauri/target/release/bundle/macos/`
+打包后的应用位于：`gui/src-tauri/target/release/bundle/macos/`
 
 ---
 
@@ -207,7 +207,7 @@ npm run tauri check
 ### 项目结构
 
 ```
-wechat-dual-gui/
+gui/
 ├── src/                    # 前端代码
 │   ├── index.html          # HTML 结构
 │   ├── main.js            # JavaScript 逻辑

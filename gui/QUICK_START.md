@@ -80,7 +80,7 @@ xcode-select --install
 ### 1. 进入项目目录
 
 ```bash
-cd /Volumes/Project/WeChatDouble/wechat-dual-gui
+cd /Volumes/Project/WeChatDouble/gui
 ```
 
 ### 2. 安装 Node.js 依赖
@@ -322,7 +322,7 @@ cargo build
 
 ```bash
 # 修复项目权限
-sudo chown -R $USER:staff /Volumes/Project/WeChatDouble/wechat-dual-gui
+sudo chown -R $USER:staff /Volumes/Project/WeChatDouble/gui
 ```
 
 #### 4. 微信路径错误

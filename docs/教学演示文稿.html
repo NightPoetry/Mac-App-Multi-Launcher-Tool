@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mac应用多开技术原理教学演示</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', 'SimHei', sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .slide {
+            background: white;
+            border-radius: 10px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            min-height: 600px;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        
+        h2 {
+            color: #764ba2;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+        
+        h3 {
+            color: #555;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #d63384;
+        }
+        
+        pre {
+            background: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+        
+        .highlight {
+            background: #fff3cd;
+            padding: 15px;
+            border-left: 4px solid #667eea;
+            margin: 15px 0;
+        }
+        
+        .tip {
+            background: #d4edda;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        .tip::before {
+            content: "💡 提示：";
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .warning {
+            background: #fff3cd;
+            padding: 15px;
+            border-left: 4px solid #f39c12;
+            margin: 15px 0;
+        }
+        
+        .warning::before {
+            content: "⚠️ 注意：";
+            font-weight: bold;
+            color: #f39c12;
+        }
+        
+        .step {
+            background: #e8f5e9;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        
+        .diagram {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 15px 0;
+            text-align: center;
+        }
+        
+        .diagram-box {
+            border: 2px solid #667eea;
+            padding: 15px;
+            margin: 10px;
+            border-radius: 5px;
+            background: white;
+        }
+        
+        .arrow {
+            font-size: 24px;
+            color: #667eea;
+        }
+        
+        .slide-number {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 50%;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .slide {
+            position: relative;
+        }
+        
+        .nav {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .nav button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 0 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .nav button:hover {
+            background: #764ba2;
+        }
+        
+        .toc {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        
+        .toc a {
+            color: #667eea;
+            text-decoration: none;
+            display: block;
+            margin: 5px 0;
+        }
+        
+        .toc a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 幻灯片 1：标题页 -->
+        <div class="slide">
+            <div class="slide-number">1</div>
+            <h1>🎓 Mac应用多开技术原理教学</h1>
+            <div style="text-align: center; margin-top: 50px;">
+                <h2 style="font-size: 36px; color: #667eea;">MacAppMultiLauncher</h2>
+                <p style="font-size: 24px; color: #764ba2; margin-top: 20px;">macOS 应用多开技术分享项目</p>
+                <div style="margin-top: 40px;">
+                    <p style="font-size: 18px;">👨 讲师：Night Poetry</p>
+                    <p style="font-size: 18px;">📅 日期：2026-04-02</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 幻灯片 2：课程大纲 -->
+        <div class="slide">
+            <div class="slide-number">2</div>
+            <h1>📚 课程大纲</h1>
+            <div class="toc">
+                <h3>第一部分：技术原理概述</h3>
+                <a href="#slide3">1. macOS 应用限制机制</a>
+                <a href="#slide4">2. Bundle ID 修改原理</a>
+                <a href="#slide5">3. 代码签名原理</a>
+                <a href="#slide6">4. 图标渲染机制</a>
+                <a href="#slide7">5. 数据隔离原理</a>
+                
+                <h3>第二部分：核心步骤详解</h3>
+                <a href="#slide8">1. 应用复制</a>
+                <a href="#slide9">2. Bundle ID 修改</a>
+                <a href="#slide10">3. 重新签名</a>
+                <a href="#slide11">4. 启动多开</a>
+                
+                <h3>第三部分：实践操作</h3>
+            </div>
+        </div>
+
+        <!-- 幻灯片 3：macOS 应用限制机制 -->
+        <div class="slide" id="slide3">
+            <div class="slide-number">3</div>
+            <h1>🔒 macOS 应用限制机制</h1>
+            
+            <h2>为什么需要多开方案？</h2>
+            <p>macOS 系统默认不允许同一应用运行多个实例。应用通过以下机制限制多开：</p>
+            
+            <ul>
+                <li><strong>Bundle ID 识别</strong>：系统通过应用的 Bundle Identifier 识别应用</li>
+                <li><strong>进程检测</strong>：应用启动时检测是否已存在相同 Bundle ID 的进程</li>
+                <li><strong>签名验证</strong>：系统验证应用签名确保完整性</li>
+            </ul>
+            
+            <div class="diagram">
+                <h3>应用限制机制图解</h3>
+                <div class="diagram-box">
+                    <p><strong>macOS 应用限制</strong></p>
+                    <ul>
+                        <li>Bundle ID 唯一性</li>
+                        <li>进程单实例限制</li>
+                        <li>签名验证机制</li>
+                    </ul>
+                </div>
+                <div class="arrow">↓</div>
+                <div class="diagram-box">
+                    <p><strong>多开解决方案</strong></p>
+                    <ul>
+                        <li>修改为不同的标识符</li>
+                        <li>使用 open -n 强制新进程</li>
+                        <li>重新签名绕过验证</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="tip">
+                <p>理解这些限制是掌握应用多开技术的基础。每个限制都有对应的解决方案。</p>
+            </div>
+        </div>
+
+        <!-- 幻灯片 4：Bundle ID 修改原理 -->
+        <div class="slide" id="slide4">
+            <div class="slide-number">4</div>
+            <h1>🆔 Bundle ID 修改原理</h1>
+            
+            <h2>什么是 Bundle ID？</h2>
+            <p>每个 macOS 应用都有一个唯一的 Bundle Identifier（如 <code>com.example.app</code>）。</p>
+            
+            <h3>Bundle ID 的作用</h3>
+            <ul>
+                <li>系统识别应用的唯一标识</li>
+                <li>决定应用的数据存储位置</li>
+                <li>影响应用的权限和设置</li>
+                <li>用于应用间通信和识别</li>
+            </ul>
+            
+            <h2>修改方式</h2>
+            <p>编辑应用包内的 <code>Info.plist</code> 文件，修改 <code>CFBundleIdentifier</code> 字段。</p>
+            
+            <pre>&lt;key&gt;CFBundleIdentifier&lt;/key&gt;
+&lt;string&gt;com.example.app&lt;/string&gt;  &lt;!-- 原版 --&gt;
+&lt;string&gt;com.example.app2&lt;/string&gt; &lt;!-- 多开版 --&gt;</pre>
+            
+            <div class="highlight">
+                <h3>修改后的效果</h3>
+                <ul>
+                    <li>系统将其识别为独立应用</li>
+                    <li>数据完全隔离</li>
+                    <li>可以同时运行多个实例</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 幻灯片 5：代码签名原理 -->
+        <div class="slide" id="slide5">
+            <div class="slide-number">5</div>
+            <h1>🔐 代码签名原理</h1>
+            
+            <h2>什么是代码签名？</h2>
+            <p>macOS 的代码签名机制（Code Signing）用于：</p>
+            <ul>
+                <li>验证应用来源和完整性</li>
+                <li>防止未经授权的修改</li>
+                <li>保护系统安全</li>
+            </ul>
+            
+            <h2>为什么需要重新签名？</h2>
+            <p>修改应用内容（包括 Info.plist）后，原有签名失效，系统会认为应用已损坏。</p>
+            
+            <h3>解决方案：Ad-Hoc 签名</h3>
+            <pre>sudo codesign --force --deep --sign - /Applications/应用分身.app</pre>
+            
+            <div class="diagram">
+                <h3>签名参数说明</h3>
+                <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+                    <tr style="background: #667eea; color: white;">
+                        <th style="padding: 10px;">参数</th>
+                        <th style="padding: 10px;">作用</th>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd;"><code>--force</code></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">强制覆盖原有签名</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd;"><code>--deep</code></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">递归签名应用包内所有组件</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd;"><code>--sign -</code></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">使用 Ad-Hoc 证书（短横线表示本地签名）</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="tip">
+                <p>Ad-Hoc 签名不需要开发者证书，适合个人使用场景。</p>
+            </div>
+        </div>
+
+        <!-- 幻灯片 6：图标渲染机制 -->
+        <div class="slide" id="slide6">
+            <div class="slide-number">6</div>
+            <h1>🎨 图标渲染机制</h1>
+            
+            <h2>图标存储位置</h2>
+            <pre>应用名称.app/
+└── Contents/
+    ├── Info.plist              # 应用配置信息
+    └── Resources/
+        └── AppIcon.icns        # 应用图标文件</pre>
+            
+            <h3>图标格式要求</h3>
+            <ul>
+                <li><strong>格式</strong>：<code>.icns</code>（Apple Icon Image Format）</li>
+                <li><strong>尺寸</strong>：包含多个分辨率（16×16 到 1024×1024）</li>
+                <li><strong>特点</strong>：支持 Retina 显示屏，自动适配不同场景</li>
+            </ul>
+            
+            <h2>图标自定义方案</h2>
+            <div class="diagram">
+                <div class="diagram-box">
+                    <h4>方案 A：Finder 快速替换</h4>
+                    <ul>
+                        <li>右键点击应用 → 显示简介</li>
+                        <li>点击简介窗口左上角的小图标</li>
+                        <li>将准备好的图标拖拽到该位置</li>
+                    </ul>
+                    <p><strong>优点</strong>：5 分钟搞定，即时生效</p>
+                    <p><strong>缺点</strong>：系统更新后可能失效</p>
+                </div>
+                <div class="arrow">↔</div>
+                <div class="diagram-box">
+                    <h4>方案 B：深度修改应用包</h4>
+                    <ul>
+                        <li>替换应用包内的 .icns 文件</li>
+                        <li>修改 Info.plist 配置</li>
+                        <li>重新签名应用</li>
+                    </ul>
+                    <p><strong>优点</strong>：永久生效，稳定不失效</p>
+                    <p><strong>缺点</strong>：需要终端操作，步骤稍多</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 幻灯片 7：数据隔离原理 -->
+        <div class="slide" id="slide7">
+            <div class="slide-number">7</div>
+            <h1>🔒 数据隔离原理</h1>
+            
+            <h2>数据会混淆吗？</h2>
+            <p><strong>答案：不会！</strong></p>
+            
+            <h3>原因</h3>
+            <ul>
+                <li>两个应用 Bundle ID 不同</li>
+                <li>macOS 为每个应用创建独立的沙盒目录</li>
+                <li>聊天记录、缓存、配置完全隔离</li>
+            </ul>
+            
+            <h3>数据位置</h3>
+            <pre>~/Library/Containers/com.example.app/      # 原版应用
+~/Library/Containers/com.example.app2/     # 多开应用</pre>
+            
+            <div class="highlight">
+                <h3>数据隔离的好处</h3>
+                <ul>
+                    <li>完全独立的数据存储</li>
+                    <li>互不干扰的应用配置</li>
+                    <li>独立的缓存和临时文件</li>
+                    <li>安全的数据隔离</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 幻灯片 8：应用复制 -->
+        <div class="slide" id="slide8">
+            <div class="slide-number">8</div>
+            <h1>📦 核心步骤详解：应用复制</h1>
+            
+            <h2>步骤 1：复制应用副本</h2>
+            <pre>sudo cp -R /Applications/原应用.app /Applications/应用分身.app</pre>
+            
+            <h3>技术说明</h3>
+            <ul>
+                <li><code>-R</code>：递归复制整个应用包（应用包本质是目录结构）</li>
+                <li>需要 <code>sudo</code>：应用程序目录需要管理员权限</li>
+                <li>副本是完整拷贝，包含所有资源和配置</li>
+            </ul>
+            
+            <div class="tip">
+                <p>确保有足够的磁盘空间，应用包可能很大。</p>
+            </div>
+        </div>
+
+        <!-- 幻灯片 9：Bundle ID 修改 -->
+        <div class="slide" id="slide9">
+            <div class="slide-number">9</div>
+            <h1>📦 核心步骤详解：Bundle ID 修改</h1>
+            
+            <h2>步骤 2：修改 Bundle ID</h2>
+            <pre>sudo /usr/libexec/PlistBuddy -c "Set :CFBundleIdentifier com.example.app2" \
+  /Applications/应用分身.app/Contents/Info.plist</pre>
+            
+            <h3>技术说明</h3>
+            <ul>
+                <li><code>PlistBuddy</code>：macOS 专用的 plist 文件编辑工具</li>
+                <li><code>-c "Set :字段名 新值"</code>：设置指定字段的值</li>
+                <li><code>CFBundleIdentifier</code>：应用的唯一标识符</li>
+                <li>命名建议：<code>com.example.app2</code> 或其他唯一名称</li>
+            </ul>
+            
+            <h3>验证修改</h3>
+            <pre>/usr/libexec/PlistBuddy -c "Print :CFBundleIdentifier" \
+  /Applications/应用分身.app/Contents/Info.plist</pre>
+            
+            <div class="warning">
+                <p>确保 Bundle ID 是唯一的，否则可能导致冲突。</p>
+            </div>
+        </div>
+
+        <!-- 幻灯片 10：重新签名 -->
+        <div class="slide" id="slide10">
+            <div class="slide-number">10</div>
+            <h1>📦 核心步骤详解：重新签名</h1>
+            
+            <h2>步骤 3：重新签名应用</h2>
+            <pre>sudo codesign --force --deep --sign - /Applications/应用分身.app</pre>
+            
+            <h3>技术细节</h3>
+            <ul>
+                <li>签名会覆盖应用包内所有可执行文件和动态库</li>
+                <li>Ad-Hoc 签名不需要开发者证书，适合本地使用</li>
+                <li>签名后系统信任修改后的应用</li>
+            </ul>
+            
+            <h3>验证签名</h3>
+            <pre>codesign -dv --verbose=4 /Applications/应用分身.app</pre>
+            
+            <div class="highlight">
+                <h3>图标斜杠问题</h3>
+                <p>如果图标出现斜杠，运行修复脚本：</p>
+                <pre>bash scripts/fix-icon-slash.sh</pre>
+                <p>或手动修复：</p>
+                <pre>xattr -cr /Applications/应用分身.app
+sudo chown -R $USER:staff /Applications/应用分身.app
+sudo chmod -R 755 /Applications/应用分身.app
+codesign --force -s - --timestamp=none /Applications/应用分身.app</pre>
+            </div>
+        </div>
+
+        <!-- 幻灯片 11：启动多开 -->
+        <div class="slide" id="slide11">
+            <div class="slide-number">11</div>
+            <h1>📦 核心步骤详解：启动多开</h1>
+            
+            <h2>步骤 4：启动多开应用</h2>
+            <pre>open -n /Applications/应用分身.app</pre>
+            
+            <h3>技术说明</h3>
+            <ul>
+                <li><code>open -n</code>：强制打开新实例（New instance）</li>
+                <li>即使即使 Bundle ID 不同，也建议使用 <code>-n</code> 参数确保多开</li>
+                <li>两个应用完全独立，数据隔离</li>
+            </ul>
+            
+            <h3>启动两个实例</h3>
+            <pre># 启动原版应用
+open -n /Applications/原应用.app
+
+# 启动多开应用
+open -n /Applications/应用分身.app</pre>
+            
+            <div class="tip">
+                <p>现在你可以同时运行两个应用实例，登录不同的账号！</p>
+            </div>
+        </div>
+
+        <!-- 幻灯片 12：实践操作 -->
+        <div class="slide">
+            <div class="slide-number">12</div>
+            <h1>🛠️ 实践操作</h1>
+            
+            <h2>一键多开脚本</h2>
+            <p>使用项目提供的一键多开脚本，自动完成所有配置：</p>
+            <pre>sudo bash scripts/wechat-dual.sh</pre>
+            
+            <h3>脚本自动完成的步骤</h3>
+            <ol>
+                <li>检查原版应用是否存在</li>
+                <li>复制应用副本</li>
+                <li>修改 Bundle ID</li>
+                <li>清除原有签名</li>
+                <li>清除隔离属性</li>
+                <li>修复文件权限</li>
+                <li>重新签名应用</li>
+                <li>启动多开应用</li>
+            </ol>
+            
+            <h2>手动操作</h2>
+            <p>如果想了解每个步骤的原理，可以手动执行以下 4 个核心命令：</p>
+            
+            <div class="diagram">
+                <div class="diagram-box">
+                    <h4>1. 复制应用</h4>
+                    <pre>sudo cp -R /Applications/原应用.app /Applications/应用分身.app</pre>
+                </div>
+                <div class="arrow">↓</div>
+                <div class="diagram-box">
+                    <h4>2. 修改 Bundle ID</h4>
+                    <pre>sudo /usr/libexec/PlistBuddy -c "Set :CFBundleIdentifier com.example.app2" \
+  /Applications/应用分身.app/Contents/Info.plist</pre>
+                </div>
+                <div class="arrow">↓</div>
+                <div class="diagram-box">
+                    <h4>3. 重新签名</h4>
+                    <pre>sudo codesign --force --deep --sign - /Applications/应用分身.app</pre>
+                </div>
+                <div class="arrow">↓</div>
+                <div class="diagram-box">
+                    <h4>4. 启动多开</h4>
+                    <pre>open -n /Applications/应用分身.app</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- 幻灯片 13：常见问题 -->
+        <div class="slide">
+            <div class="slide-number">13</div>
+            <h1>❓ 常见问题解答</h1>
+            
+            <h2>Q1: 提示"应用已损坏，无法打开"</h2>
+            <p><strong>原因</strong>：签名验证失败或 Gatekeeper 拦截</p>
+            <p><strong>解决方案</strong>：</p>
+            <pre># 方法 1：重新签名
+sudo codesign --force --deep --sign - /Applications/应用分身.app
+
+# 方法 2：允许任何来源（macOS 10.12+）
+sudo xattr -rd com.apple.quarantine /Applications/应用分身.app</pre>
+            
+            <h2>Q2: 图标带斜杠但能启动？</h2>
+            <p><strong>现象</strong>：多开应用可以正常使用，但图标上有个斜杠标记</p>
+            <p><strong>原因</strong>：这是系统标记的"可疑应用"提示，但不影响使用</p>
+            <p><strong>解决方案</strong>：</p>
+            <pre>bash scripts/fix-icon-slash.sh</pre>
+            
+            <h2>Q3: 数据会混淆吗？</h2>
+            <p><strong>答案</strong>：不会！</p>
+            <p><strong>原因</strong>：两个应用的 Bundle ID 不同，macOS 为每个应用创建独立的沙盒目录，聊天记录、缓存、配置完全隔离。</p>
+            
+            <h2>Q4: 应用更新后需要重新配置吗？</h2>
+            <p><strong>答案</strong>：是的</p>
+            <p><strong>原因</strong>：应用更新会覆盖原版应用，多开副本不会自动更新，需要重新复制和配置。</p>
+            <pre># 更新流程
+sudo rm -rf /Applications/应用分身.app
+sudo bash scripts/wechat-dual.sh</pre>
+        </div>
+
+        <!-- 幻灯片 14：总结 -->
+        <div class="slide">
+            <div class="slide-number">14</div>
+            <h1>📚 课程总结</h1>
+            
+            <h2>核心技术栈</h2>
+            <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+                <tr style="background: #667eea; color: white;">
+                    <th style="padding: 10px;">技术</th>
+                    <th style="padding: 10px;">工具/命令</th>
+                    <th style="padding: 10px;">作用</th>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; border: 1px solid #ddd;">应用复制</td>
+                    <td style="padding: 10px; border: 1px solid #ddd;"><code>cp -R</code></td>
+                    <td style="padding: 10px; border: 1px solid #ddd;">创建独立副本</td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; border: 1px solid #ddd;">Bundle ID 修改</td>
+                    <td style="padding: 10px; border: 1px solid #ddd;"><code>PlistBuddy</code></td>
+                    <td style="padding: 10px; border: 1px solid #ddd;">修改应用标识</td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; border: 1px solid #ddd;">代码签名</td>
+                    <td style="padding: 10px; border: 1px solid #ddd;"><code>codesign</code></td>
+                    <td style="padding: 10px; border: 1px solid #ddd;">绕过签名验证</td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; border: 1px solid #ddd;">图标替换</td>
+                    <td style="padding: 10px; border: 1px solid #ddd;">Finder 或 手动替换</td>
+                    <td style="padding: 10px; border: 1px solid #ddd;">自定义视觉标识</td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; border: 1px solid #ddd;">进程管理</td>
+                    <td style="padding: 10px; border: 1px solid #ddd;"><code>open -n</code></td>
+                    <td style="padding: 10px; border: 1px solid #ddd;">强制多实例运行</td>
+                </tr>
+            </table>
+            
+            <h2>安全性说明</h2>
+            <div class="highlight">
+                <h3>✅ 安全操作</h3>
+                <ul>
+                    <li>仅修改本地应用文件</li>
+                    <li>不破解网络协议</li>
+                    <li>不注入恶意代码</li>
+                    <li>数据完全隔离</li>
+                    <li>使用 Ad-Hoc 签名（无需证书）</li>
+                </ul>
+            </div>
+            
+            <div class="warning">
+                <h3>⚠️ 注意事项</h3>
+                <ul>
+                    <li>需要管理员权限（sudo）</li>
+                    <li>可能违反应用服务协议</li>
+                    <li>仅供学习研究使用</li>
+                    <li>自行承担使用风险</li>
+                </ul>
+            </div>
+            
+            <h2>适用系统</h2>
+            <ul>
+                <li><strong>macOS</strong>：10.14 (Mojave) 及以上</li>
+                <li><strong>应用版本</strong>：所有版本</li>
+                <li><strong>硬件支持</strong>：Intel 和 Apple Silicon (M1/M2/M3)</li>
+            </ul>
+            
+            <div class="tip">
+                <h3>🎉 恭喜你完成了课程学习！</h3>
+                <p>现在你已经掌握了 macOS 应用多开的核心技术原理。</p>
+                <p>可以尝试对其他应用进行多开操作，或者深入研究相关技术。</p>
+            </div>
+        </div>
+
+        <!-- 导航 -->
+        <div class="nav">
+            <button onclick="window.scrollTo(0,0)">⬆️ 开始</button>
+            <button onclick="window.print()">🖨️ 打印</button>
+        </div>
+    </div>
+    
+    <script>
+        // 键盘导航
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+                e.preventDefault();
+                window.scrollBy(0, 650);
+            } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                e.preventDefault();
+                window.scrollBy(0, -650);
+            }
+        });
+    </script>
+</body>
+</html>

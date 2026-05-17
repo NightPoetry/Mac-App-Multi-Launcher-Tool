@@ -12,7 +12,8 @@ echo "1. 创建临时目录：$ICONSET_DIR"
 mkdir -p "$ICONSET_DIR"
 
 # 源图片
-SOURCE_IMAGE="/Volumes/Project/WeChatDouble/wechat-dual-gui/src-tauri/icons/icon.png"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+SOURCE_IMAGE="$SCRIPT_DIR/../gui/src-tauri/icons/icon.png"
 
 if [ ! -f "$SOURCE_IMAGE" ]; then
     echo "错误：源图片不存在：$SOURCE_IMAGE"

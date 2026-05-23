@@ -1,2 +1,14 @@
 # AI assistant local notice
 AI_NOTICE.md
+
+# macOS
+.DS_Store
+*.swp
+*.swo
+
+# Build output
+gui/dist/
+
+# IDE
+.idea/
+.vscode/
